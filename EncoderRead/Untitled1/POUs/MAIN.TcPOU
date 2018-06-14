@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="MAIN" Id="{7a590bf8-6ce4-4e38-8b27-7843d127a81f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	heartbeat 		: UDINT;
+	
+	enc_raw AT %I* 	: UINT;
+	enc_angle 		: REAL;
+	
+	// Time
+	tDC 			: T_DCTIME64;
+	sTime 			: STRING;
+	
+	// File writing
+	bRecordData 	: BOOL;
+	iFileState 		: UINT;
+	sFilePath 		: STRING 	:= 'C:\Users\Public\Documents\EncoderData\test.csv';
+	fbRecordTrigger	: R_TRIG;
+	
+	fbFileOpen		: FB_FileOpen; 				// Opens file
+	fbFileClose		: FB_FileClose;				// Closes file
+	//fbFileWriter		: FB_FilePuts;				// Writes strings by line
+	fbFileWriter		: FB_FileWrite;			// Writes binary
+	
+	sLineToWrite	: STRING;
+	
+	bBusy			: BOOL;
+	bError			: BOOL;
+	nErrId			: UDINT;
+	hFile			: UINT		:= 0;
+	
+	iStartWrite		: UDINT;					// PLC scans at start of write
+	iWriteScans		: UDINT;					// PLC scans between writes
+	
+	// Buffer
+	sBuffer 		: ARRAY [0..iBufferLength] OF STRING;
+	sLineToBuffer	: STRING;
+	cbCurrentBufferLength : UDINT;
+	sBufferToWrite	: ARRAY [0..iBufferLength] OF STRING;
+	bBufferFull 	: BOOL;
+	
+END_VAR
+VAR CONSTANT
+	iBufferLength	: UDINT		:= 50;
+	iLineLength 	: UDINT		:= 26;
+END_VAR	
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[heartbeat := heartbeat + 1;
+
+enc_angle := enc_raw MOD (360*4);
+enc_angle := enc_angle / 4;
+
+tDC := F_GetCurDcTaskTime64();
+sTime := DCTIME64_TO_STRING(tDC);
+
+IF iBufferLength > cbCurrentBufferLength THEN
+	bBufferFull := FALSE;
+ELSE
+	bBufferFull := TRUE;
+END_IF
+
+fbRecordTrigger(CLK:=bRecordData);
+IF fbRecordTrigger.Q THEN
+	// Clear the buffer when we start recording
+	MEMSET( destAddr := ADR(sBuffer),
+			fillByte := 0,
+			n := iLineLength * iBufferLength);
+	cbCurrentBufferLength := 0;
+END_IF
+
+IF bRecordData AND NOT bBufferFull THEN
+	// Prepare the line to buffer
+	sLineToBuffer := '';
+	sLineToBuffer := CONCAT(ULINT_TO_STRING(tDC), ', ');
+	sLineToBuffer := CONCAT(sLineToBuffer, UINT_TO_STRING(enc_raw));
+	sLineToBuffer := CONCAT(sLineToBuffer, '$L');
+
+	// Copy the line into the buffer
+	MEMCPY(	srcAddr := ADR(sLineToBuffer),
+			destAddr := ADR(sBuffer) + cbCurrentBufferLength * iLineLength,
+			n := iLineLength);
+	
+	cbCurrentBufferLength := cbCurrentBufferLength + 1;
+END_IF
+
+CASE iFileState OF
+	0:	// Wait to start
+		IF bRecordData THEN
+			bBusy := TRUE;
+			
+			// Reset some variables
+			bError	:= FALSE;
+			nErrId	:= 0;
+			hFile	:= 0;
+			
+			iFileState := 10;
+		END_IF
+		
+	10:	// Open the file
+		fbFileOpen(bExecute := FALSE);
+		fbFileOpen(	sNetId := '', 
+					sPathName := sFilePath, 
+					//nMode := FOPEN_MODEWRITE OR FOPEN_MODETEXT, 
+					nMode := FOPEN_MODEWRITE OR FOPEN_MODEBINARY, 
+					ePath := PATH_GENERIC, 
+					bExecute := TRUE);
+		iFileState := 20;
+	
+	20:	// Wait for opening to finish
+		fbFileOpen(bExecute := FALSE, bError => bError, nErrID => nErrID, hFile => hFile );
+		IF NOT fbFileOpen.bBusy THEN
+			IF NOT fbFileOpen.bError THEN
+				iFileState := 30;
+			ELSE(* Error: file not found? *)
+				iFileState := 100;
+			END_IF
+		END_IF
+		
+	30: // If we still want to write the file, write the next line
+		IF bRecordData THEN
+			// Clear the writer's buffer						
+			MEMSET( destAddr := ADR(sBufferToWrite),
+					fillByte := 0,
+					n := iLineLength * iBufferLength);
+		
+			MEMCPY(	srcAddr := ADR(sBuffer),
+					destAddr := ADR(sBufferToWrite),
+					n := cbCurrentBufferLength * iLineLength);
+			
+			fbFileWriter( sNetId := '',
+						hFile := hFile,
+						pWriteBuff := ADR(sBufferToWrite),
+						cbWriteLen := cbCurrentBufferLength * iLineLength,
+						bExecute := TRUE);
+			
+			// Clear the buffer						
+			MEMSET( destAddr := ADR(sBuffer),
+					fillByte := 0,
+					n := iLineLength * iBufferLength);
+			cbCurrentBufferLength := 0;
+			
+			(*
+			sLineToWrite := CONCAT(ULINT_TO_STRING(tDC), ', ');
+			sLineToWrite := CONCAT(sLineToWrite, UINT_TO_STRING(enc_raw));
+			//sLineToWrite := CONCAT(sLineToWrite, REAL_TO_STRING(enc_angle));
+			sLineToWrite := CONCAT(sLineToWrite, '$L');
+			
+			// Write in binary
+			fbFileWriter( sNetId := '',
+						hFile := hFile,
+						pWriteBuff := ADR(sLineToWrite),
+						cbWriteLen := LEN(sLineToWrite),
+						bExecute := TRUE);
+
+			// Write as string
+			(*fbFileWriter( sNetId := '',
+						hFile := hFile,
+						sLine := sLineToWrite,
+						bExecute := TRUE);*)
+			*)
+						
+			iWriteScans := heartbeat - iStartWrite;
+			iStartWrite := heartbeat;
+			
+			iFileState := 40;
+		
+		ELSE // Stop writing
+			iFileState := 200;
+		END_IF
+		
+	40:	// Wait for the write to finish
+		fbFileWriter( bExecute := FALSE, bError => bError, nErrID => nErrID );
+		IF NOT fbFileWriter.bBusy THEN
+			IF NOT fbFileWriter.bError THEN
+				iFileState := 30;(* Write next record *)
+			ELSE(* Error *)
+				iFileState := 100;
+			END_IF
+		END_IF
+			
+	100: // Error
+		IF ( hFile <> 0 ) THEN
+			iFileState := 200; (* Close the source file *)
+		ELSE
+			bBusy := FALSE;
+			iFileState := 0;	(* Ready *)
+		END_IF
+		
+	200: // Close
+		fbFileClose( bExecute := FALSE );
+		fbFileClose( sNetId := '', hFile := hFile, bExecute := TRUE );
+		iFileState := 210;
+		
+	210: // Wait for close to finish
+		fbFileClose( bExecute := FALSE, bError => bError, nErrID => nErrID );
+		IF ( NOT fbFileClose.bBusy ) THEN
+			hFile := 0;
+			bBusy := FALSE;
+			iFileState := 0;	(* Ready *)
+		END_IF
+
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="877" Count="16" />
+      <LineId Id="1028" Count="2" />
+      <LineId Id="1027" Count="0" />
+      <LineId Id="894" Count="132" />
+      <LineId Id="128" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
