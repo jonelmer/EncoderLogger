@@ -20,7 +20,6 @@ VAR
 	
 	fbFileOpen		: FB_FileOpen; 				// Opens file
 	fbFileClose		: FB_FileClose;				// Closes file
-	//fbFileWriter		: FB_FilePuts;				// Writes strings by line
 	fbFileWriter		: FB_FileWrite;			// Writes binary
 	
 	sLineToWrite	: STRING;
@@ -43,7 +42,7 @@ VAR
 END_VAR
 VAR CONSTANT
 	iBufferLength	: UDINT		:= 50;
-	iLineLength 	: UDINT		:= 26;
+	iLineLength 	: UDINT		:= 24;
 END_VAR	
 ]]></Declaration>
     <Implementation>
@@ -54,12 +53,6 @@ enc_angle := enc_angle / 4;
 
 tDC := F_GetCurDcTaskTime64();
 sTime := DCTIME64_TO_STRING(tDC);
-
-IF iBufferLength > cbCurrentBufferLength THEN
-	bBufferFull := FALSE;
-ELSE
-	bBufferFull := TRUE;
-END_IF
 
 fbRecordTrigger(CLK:=bRecordData);
 IF fbRecordTrigger.Q THEN
@@ -85,6 +78,12 @@ IF bRecordData AND NOT bBufferFull THEN
 	cbCurrentBufferLength := cbCurrentBufferLength + 1;
 END_IF
 
+IF iBufferLength > cbCurrentBufferLength THEN
+	bBufferFull := FALSE;
+ELSE
+	bBufferFull := TRUE;
+END_IF
+
 CASE iFileState OF
 	0:	// Wait to start
 		IF bRecordData THEN
@@ -102,7 +101,6 @@ CASE iFileState OF
 		fbFileOpen(bExecute := FALSE);
 		fbFileOpen(	sNetId := '', 
 					sPathName := sFilePath, 
-					//nMode := FOPEN_MODEWRITE OR FOPEN_MODETEXT, 
 					nMode := FOPEN_MODEWRITE OR FOPEN_MODEBINARY, 
 					ePath := PATH_GENERIC, 
 					bExecute := TRUE);
@@ -118,7 +116,7 @@ CASE iFileState OF
 			END_IF
 		END_IF
 		
-	30: // If we still want to write the file, write the next line
+	30: // If we still want to write the file, write it
 		IF bRecordData THEN
 			// Clear the writer's buffer						
 			MEMSET( destAddr := ADR(sBufferToWrite),
@@ -140,26 +138,6 @@ CASE iFileState OF
 					fillByte := 0,
 					n := iLineLength * iBufferLength);
 			cbCurrentBufferLength := 0;
-			
-			(*
-			sLineToWrite := CONCAT(ULINT_TO_STRING(tDC), ', ');
-			sLineToWrite := CONCAT(sLineToWrite, UINT_TO_STRING(enc_raw));
-			//sLineToWrite := CONCAT(sLineToWrite, REAL_TO_STRING(enc_angle));
-			sLineToWrite := CONCAT(sLineToWrite, '$L');
-			
-			// Write in binary
-			fbFileWriter( sNetId := '',
-						hFile := hFile,
-						pWriteBuff := ADR(sLineToWrite),
-						cbWriteLen := LEN(sLineToWrite),
-						bExecute := TRUE);
-
-			// Write as string
-			(*fbFileWriter( sNetId := '',
-						hFile := hFile,
-						sLine := sLineToWrite,
-						bExecute := TRUE);*)
-			*)
 						
 			iWriteScans := heartbeat - iStartWrite;
 			iStartWrite := heartbeat;
@@ -204,10 +182,16 @@ CASE iFileState OF
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="877" Count="16" />
+      <LineId Id="877" Count="7" />
+      <LineId Id="891" Count="2" />
       <LineId Id="1028" Count="2" />
       <LineId Id="1027" Count="0" />
-      <LineId Id="894" Count="132" />
+      <LineId Id="894" Count="15" />
+      <LineId Id="1038" Count="4" />
+      <LineId Id="1037" Count="0" />
+      <LineId Id="910" Count="17" />
+      <LineId Id="929" Count="36" />
+      <LineId Id="986" Count="40" />
       <LineId Id="128" Count="0" />
     </LineIds>
   </POU>
