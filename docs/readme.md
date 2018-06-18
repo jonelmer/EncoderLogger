@@ -37,5 +37,6 @@ The general process is as follows:
  -  Wait for the file to close successfully
 
 The process is implemented in a state machine:
+
 ![state diagram](./state_diagram.png)
 
