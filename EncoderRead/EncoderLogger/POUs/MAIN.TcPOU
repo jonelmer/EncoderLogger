@@ -11,85 +11,87 @@ VAR
 	// Time
 	tDC 			: T_DCTIME64;
 	sTime 			: STRING;
+	dDate 			: TIMESTRUCT;
 	
 	// File writing
 	bRecordData 	: BOOL;
 	iFileState 		: UINT;
-	sFilePath 		: STRING 	:= 'C:\Users\Public\Documents\EncoderData\test.csv';
+	sFilePath 		: STRING 	:= 'C:\Users\Public\Documents\EncoderData\';
+	sFileType		: STRING	:= '.bin';
+	sFileName		: STRING;
 	fbRecordTrigger	: R_TRIG;
 	
 	fbFileOpen		: FB_FileOpen; 				// Opens file
 	fbFileClose		: FB_FileClose;				// Closes file
-	fbFileWriter		: FB_FileWrite;			// Writes binary
-	
-	sLineToWrite	: STRING;
+	fbFileWriter	: FB_FileWrite;				// Writes binary
 	
 	bBusy			: BOOL;
 	bError			: BOOL;
 	nErrId			: UDINT;
 	hFile			: UINT		:= 0;
 	
-	iStartWrite		: UDINT;					// PLC scans at start of write
-	iWriteScans		: UDINT;					// PLC scans between writes
-	
 	// Buffer
-	sBuffer 		: ARRAY [0..iBufferLength] OF STRING;
-	sLineToBuffer	: STRING;
-	cbCurrentBufferLength : UDINT;
-	sBufferToWrite	: ARRAY [0..iBufferLength] OF STRING;
-	bBufferFull 	: BOOL;
-	
+	stBuffer 		: ARRAY [0..iBufferLength] OF DCTIME64_UINT;	// Buffer to dump data into
+	iEndOfBuffer	: UDINT		:= 0;								// Index of the end of the buffer
+	bBufferFull 	: BOOL;											// Is stBuffer full?
+	stBufferToWrite	: ARRAY [0..iBufferLength] OF DCTIME64_UINT;	// Buffer to write into file (static copy of stBuffer)
+	iLenToWrite     : UDINT;										// Number of elements in stBufferToWrite
+
 END_VAR
 VAR CONSTANT
-	iBufferLength	: UDINT		:= 50;
-	iLineLength 	: UDINT		:= 24;
-END_VAR	
-]]></Declaration>
+	iBufferLength	: UDINT		:= 50;								// Number of elements in the array
+	cbElementSize 	: UDINT		:= SIZEOF(DCTIME64_UINT);			// Size of each element
+END_VAR	]]></Declaration>
     <Implementation>
       <ST><![CDATA[heartbeat := heartbeat + 1;
 
+// Get the encoder value
 enc_angle := enc_raw MOD (360*4);
 enc_angle := enc_angle / 4;
 
+
+// Get the time
 tDC := F_GetCurDcTaskTime64();
 sTime := DCTIME64_TO_STRING(tDC);
+dDate := DCTIME64_TO_SYSTEMTIME(tDC);
 
+
+// Clear the buffer and set the file name when we start recording
 fbRecordTrigger(CLK:=bRecordData);
 IF fbRecordTrigger.Q THEN
-	// Clear the buffer when we start recording
-	MEMSET( destAddr := ADR(sBuffer),
+	MEMSET( destAddr := ADR(stBuffer),
 			fillByte := 0,
-			n := iLineLength * iBufferLength);
-	cbCurrentBufferLength := 0;
-END_IF
-
-IF bRecordData AND NOT bBufferFull THEN
-	// Prepare the line to buffer
-	sLineToBuffer := '';
-	sLineToBuffer := CONCAT(ULINT_TO_STRING(tDC), ', ');
-	sLineToBuffer := CONCAT(sLineToBuffer, UINT_TO_STRING(enc_raw));
-	sLineToBuffer := CONCAT(sLineToBuffer, '$L');
-
-	// Copy the line into the buffer
-	MEMCPY(	srcAddr := ADR(sLineToBuffer),
-			destAddr := ADR(sBuffer) + cbCurrentBufferLength * iLineLength,
-			n := iLineLength);
+			n := cbElementSize * iBufferLength);
+	iEndOfBuffer := 0;
 	
-	cbCurrentBufferLength := cbCurrentBufferLength + 1;
+	sFileName := GENERATE_FILENAME(sFilePath, dDate, sFileType);
 END_IF
 
-IF iBufferLength > cbCurrentBufferLength THEN
+
+// If we're recording, and there's still room, add a new element to the buffer
+IF bRecordData AND NOT bBufferFull THEN
+	stBuffer[iEndOfBuffer].tDC := tDC;
+	stBuffer[iEndOfBuffer].iData := enc_raw;
+	
+	iEndOfBuffer := iEndOfBuffer + 1;	
+END_IF
+
+
+// Check if the buffer is full
+IF iBufferLength > iEndOfBuffer THEN
 	bBufferFull := FALSE;
 ELSE
 	bBufferFull := TRUE;
 END_IF
 
+
+// State machine to handle writing the file
 CASE iFileState OF
 	0:	// Wait to start
 		IF bRecordData THEN
 			bBusy := TRUE;
 			
-			// Reset some variables
+			// Reset variables
 			bError	:= FALSE;
 			nErrId	:= 0;
 			hFile	:= 0;
@@ -100,7 +102,7 @@ CASE iFileState OF
 	10:	// Open the file
 		fbFileOpen(bExecute := FALSE);
 		fbFileOpen(	sNetId := '', 
-					sPathName := sFilePath, 
+					sPathName := sFileName, 
 					nMode := FOPEN_MODEWRITE OR FOPEN_MODEBINARY, 
 					ePath := PATH_GENERIC, 
 					bExecute := TRUE);
@@ -111,36 +113,39 @@ CASE iFileState OF
 		IF NOT fbFileOpen.bBusy THEN
 			IF NOT fbFileOpen.bError THEN
 				iFileState := 30;
-			ELSE(* Error: file not found? *)
+			ELSE
+				// Error: file not found?
 				iFileState := 100;
 			END_IF
 		END_IF
 		
 	30: // If we still want to write the file, write it
 		IF bRecordData THEN
-			// Clear the writer's buffer						
-			MEMSET( destAddr := ADR(sBufferToWrite),
+			// Clear stBufferToWrite				
+			MEMSET( destAddr := ADR(stBufferToWrite),
 					fillByte := 0,
-					n := iLineLength * iBufferLength);
-		
-			MEMCPY(	srcAddr := ADR(sBuffer),
-					destAddr := ADR(sBufferToWrite),
-					n := cbCurrentBufferLength * iLineLength);
+					n := cbElementSize * iBufferLength);
+		    
+			// Copy the stBuffer into stBufferToWrite
+			MEMCPY(	srcAddr := ADR(stBuffer),
+					destAddr := ADR(stBufferToWrite),
+					n := iEndOfBuffer * cbElementSize);
 			
+			// Write stBufferToWrite into the file
 			fbFileWriter( sNetId := '',
 						hFile := hFile,
-						pWriteBuff := ADR(sBufferToWrite),
-						cbWriteLen := cbCurrentBufferLength * iLineLength,
+						pWriteBuff := ADR(stBufferToWrite),
+						cbWriteLen := iEndOfBuffer * cbElementSize,
 						bExecute := TRUE);
 			
-			// Clear the buffer						
-			MEMSET( destAddr := ADR(sBuffer),
+			// Store the number of elements being written
+			iLenToWrite := iEndOfBuffer;
+			
+			// Clear stBuffer						
+			MEMSET( destAddr := ADR(stBuffer),
 					fillByte := 0,
-					n := iLineLength * iBufferLength);
-			cbCurrentBufferLength := 0;
-						
-			iWriteScans := heartbeat - iStartWrite;
-			iStartWrite := heartbeat;
+					n := cbElementSize * iBufferLength);
+			iEndOfBuffer := 0;
 			
 			iFileState := 40;
 		
@@ -182,16 +187,7 @@ CASE iFileState OF
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="877" Count="7" />
-      <LineId Id="891" Count="2" />
-      <LineId Id="1028" Count="2" />
-      <LineId Id="1027" Count="0" />
-      <LineId Id="894" Count="15" />
-      <LineId Id="1038" Count="4" />
-      <LineId Id="1037" Count="0" />
-      <LineId Id="910" Count="17" />
-      <LineId Id="929" Count="36" />
-      <LineId Id="986" Count="40" />
+      <LineId Id="1317" Count="140" />
       <LineId Id="128" Count="0" />
     </LineIds>
   </POU>

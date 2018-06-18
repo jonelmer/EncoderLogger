@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="GENERATE_FILENAME" Id="{5a3f84cf-3117-47c3-8621-861ae5392137}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GENERATE_FILENAME : STRING
+VAR_INPUT
+	sPrefix : STRING;
+	stTime : TIMESTRUCT;
+	sSuffix : STRING;
+END_VAR
+VAR
+	sOutput : STRING;
+	sTime : STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[sTime := SYSTEMTIME_TO_STRING(stTime);
+
+sOutput := sPrefix;
+
+//sOutput := CONCAT(sOutput, 'test');
+
+sOutput := CONCAT(sOutput, LEFT(sTime, 10));
+
+sOutput := CONCAT(sOutput, ' ');
+sOutput := CONCAT(sOutput, MID(sTime, 2, 12));
+sOutput := CONCAT(sOutput, '-');
+sOutput := CONCAT(sOutput, MID(sTime, 2, 15));
+sOutput := CONCAT(sOutput, '-');
+sOutput := CONCAT(sOutput, MID(sTime, 2, 18));
+
+sOutput := CONCAT(sOutput, sSuffix);
+
+GENERATE_FILENAME := sOutput;]]></ST>
+    </Implementation>
+    <LineIds Name="GENERATE_FILENAME">
+      <LineId Id="38" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="25" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

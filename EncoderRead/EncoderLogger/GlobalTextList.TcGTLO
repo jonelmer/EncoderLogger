@@ -6,13 +6,44 @@
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
+              <v n="TextID">"592"</v>
+              <v n="TextDefault">"File: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"936"</v>
               <v n="TextDefault">"iFileState: %d"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"594"</v>
+              <v n="TextDefault">"Raw: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"320"</v>
+              <v n="TextDefault">"Raw: %s
+
+"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"207"</v>
+              <v n="TextDefault">"Raw: %s
+
+
+
+"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"685"</v>
               <v n="TextDefault">"Recording? %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"102"</v>
+              <v n="TextDefault">"Time: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

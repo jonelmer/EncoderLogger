@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{749e5599-bece-4758-8297-3405d19918b8}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
-    <Name>Untitled1</Name>
+    <Name>EncoderLogger</Name>
     <ProgramVersion>3.1.4022.2</ProgramVersion>
     <Application>{65762a34-82ff-4cf4-acd0-71edb5d2de0f}</Application>
     <TypeSystem>{084853b7-2ba0-4599-99ab-c98c4e46e1ee}</TypeSystem>
@@ -16,16 +16,19 @@
     <AutoUpdateVisuProfile>true</AutoUpdateVisuProfile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\DCTIME64_UINT.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
+    <Compile Include="POUs\GENERATE_FILENAME.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\STRING_BUFFER.TcPOU">
+    <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Visualization Manager.TcVMO">
@@ -107,7 +110,7 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Untitled1.tmc">
+    <None Include="EncoderLogger.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
