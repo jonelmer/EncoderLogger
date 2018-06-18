@@ -122,7 +122,7 @@ plt.show()
 ```
 
 
-    <matplotlib.figure.Figure at 0x167f6ff7cf8>
+![matplotlib](.\matplotlib.png)
 
 
 
@@ -172,40 +172,8 @@ fig = go.Figure(data=data, layout=layout)
 py.iplot(fig, filename="encoder_data")
 ```
 
-    C:\ProgramData\Anaconda3\lib\site-packages\plotly\plotly\plotly.py:224: UserWarning:
-    
-    Woah there! Look at all those points! Due to browser limitations, the Plotly SVG drawing functions have a hard time graphing more than 500k data points for line charts, or 40k points for other types of charts. Here are some suggestions:
-    (1) Use the `plotly.graph_objs.Scattergl` trace object to generate a WebGl graph.
-    (2) Trying using the image API to return an image instead of a graph URL
-    (3) Use matplotlib
-    (4) See if you can create your visualization with fewer data points
-    
-    If the visualization you're using aggregates points (e.g., box plot, histogram, etc.) you can disregard this warning.
-    
-    C:\ProgramData\Anaconda3\lib\site-packages\plotly\tools.py:1416: UserWarning:
-    
-    Looks like you used a newline character: '\n'.
-    
-    Plotly uses a subset of HTML escape characters
-    to do things like newline (<br>), bold (<b></b>),
-    italics (<i></i>), etc. Your newline characters 
-    have been converted to '<br>' so they will show 
-    up right on your Plotly figure!
-    
-    
-
-    The draw time for this plot will be slow for all clients.
-    
-
-    C:\ProgramData\Anaconda3\lib\site-packages\plotly\api\v1\clientresp.py:40: UserWarning:
-    
-    Estimated Draw Time Too Long
-    
-    
 
 
-
-
-<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jelmerstfc/6.embed" height="600px" width="800px"></iframe>
+[View graph](https://plot.ly/~jelmerstfc/6)
 
 
