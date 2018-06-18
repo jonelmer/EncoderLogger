@@ -8,6 +8,7 @@ The notebook first connects to the PLC, and reads the name of the most recent fi
 It then copies this over the network for processing. 
 The PLC's network name and ADS address must be correctly configured.
 
+ ## Preparing the data
 The file is then unpacked using the `struct` module. This takes a format string describing the file's data structure, and converts it to a tuple.
 
 > A note on file format:  
@@ -15,7 +16,6 @@ The file is then unpacked using the `struct` module. This takes a format string 
 > However, the data within the structure only fills 64bits (`T_DCTIME64`) + 32bits (`UINT`) or 12Bytes.
 > Therefore, the last 4Bytes of each datapoint are empty. These could be removed to reduce file size by 25%.
 
- ## Preparing the data
  Once the data is loaded, it can be formatted suitably for plotting.
 
  The timestamp in nanoseconds is converted to seconds, and the encoder value converted to degrees.
@@ -31,7 +31,7 @@ The file is then unpacked using the `struct` module. This takes a format string 
 
 > Note:  
 > Plotly doesn't like large datasets (500k points), which this code easily beats. 
-> If plotting is too low, try uncommenting `plotter = go.Scattergl`.
+> If plotting is too slow, try uncommenting `plotter = go.Scattergl`.
 
 ![matplotlib](.\matplotlib.png)
 
