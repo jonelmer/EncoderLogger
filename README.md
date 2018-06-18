@@ -7,6 +7,8 @@ A iPython notebook is provided, using [pyads](http://pyads.readthedocs.io/en/lat
 [shutil](https://docs.python.org/3.6/library/shutil.html) and [struct](https://docs.python.org/3.6/library/struct.html) 
 to load the file, and [matplotlib](https://matplotlib.org) or [plotly](https://plot.ly) to visualise the data.
 
+![Graph](./docs/plotly.png)
+
 # Features
 The project demonstrates the following features:
 - Timestamping of data using EtherCAT distributed clocks
