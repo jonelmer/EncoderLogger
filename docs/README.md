@@ -1,17 +1,14 @@
-# Encoder logger
-This project demonstrates reading an incremental encoder and logging to file using Beckhoff TwinCAT. An iPython notebook is provided for plotting the data.
-
-## PLC Code
+# PLC Code
 The [main PLC code](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=%2FEncoderRead%2FEncoderLogger%2FPOUs%2FMAIN.TcPOU&version=GBmaster) fulfills three roles; reading the encoder data and timestamp, buffering of the data, and writing the buffer to file.
 
-### Reading data
+## Reading data
 The encoder data is stored in `enc_raw` by the PLC, which reflects the internal counter on the EL5101. The encoder angle is calculated from this and stored in `enc_angle`.
 
 Timestamping is achieved by reading the [EtherCAT distributed clock](https://infosys.beckhoff.com/english.php?content=../content/1033/ethercatsystem/2469118347.html&id=) at the start of the PLC scan, to `tDC`.
 
 The encoder value `enc_raw` and timestamp `tDC` are stored in a `DCTIME64_UINT` [structure](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=/EncoderRead/EncoderLogger/DUTs/DCTIME64_UINT.TcDUT) which allows the time + data pairs to be manipulated simultaneous. 
 
-### Buffering data
+## Buffering data
 Each write takes approximately 1ms to complete; depending on the PLC scan rate, this limits the rate that data can be written to file.
 In order to sample the data at the PLC task's scan frequency, it is necessary to buffer the data before writing. 
 This is achieved by storing the current time-stamp and encoder value in an array, appending values at each PLC scan.
@@ -22,7 +19,7 @@ An integer count of the number of values currently in `stBuffer` is stored in `i
 
 When the file writer is ready to process the next bathc of data, the buffer is copied and cleared, resetting `iEndOfBuffer` to zero.
 
-### Writing data
+## Writing data
 Writing data from the PLC roughly follows the [Beckhoff example code](https://infosys.beckhoff.com/english.php?content=../content/1033/tcplclib_tc2_system/18014398540571275.html&id=1203834407911917924).
 The general process is as follows:
 
@@ -39,15 +36,3 @@ The general process is as follows:
 The process is implemented in a state machine:
 
 ![state diagram](./state_diagram.png)
-
-## iPython Notebook
-The [notebook](./BinaryPlotter.md) loads the latest file from the PLC, and plots it using both pyplot, and plotly.
-
-### Reading from the PLC using pyads
-ADS is Beckhoff's protocol for reading and writing values from a PLC over the network. [pyads](https://pyads.readthedocs.io/en/latest/index.html) provides a convenient Python wrapper for this functionality.
-
-The notebook first connects to the PLC, and reads the name of the most recent file to be written `MAIN.sFileName`. 
-It then copies this over the network for processing. 
-The PLC's network name and ADS address must be correctly configured.
-
-The file is then unpacked using the `structure` module. This takes a format string describing the file's data structure, and converts it to a python list? or tuple?
