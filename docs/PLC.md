@@ -1,5 +1,5 @@
 # PLC Code
-The [main PLC code](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=%2FEncoderRead%2FEncoderLogger%2FPOUs%2FMAIN.TcPOU&version=GBmaster) fulfills three roles; reading the encoder data and timestamp, buffering of the data, and writing the buffer to file.
+The [main PLC code](./MAIN-PLC.md) fulfills three roles; reading the encoder data and timestamp, buffering of the data, and writing the buffer to file.
 
 ## Reading data
 The encoder data is stored in `enc_raw` by the PLC, which reflects the internal counter on the EL5101. The encoder angle is calculated from this and stored in `enc_angle`.
