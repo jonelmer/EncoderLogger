@@ -7,6 +7,14 @@ A iPython notebook is provided, using [pyads](http://pyads.readthedocs.io/en/lat
 [shutil](https://docs.python.org/3.6/library/shutil.html) and [struct](https://docs.python.org/3.6/library/struct.html) 
 to load the file, and [matplotlib](https://matplotlib.org) or [plotly](https://plot.ly) to visualise the data.
 
+# Features
+The project demonstrates the following features:
+- Timestamping of data using EtherCAT distributed clocks
+- Writing files from the PLC
+- Reading PLC variables over the network using ADS
+- Converting data from the PLC into a Pythonic format
+- Plotting data using common Python graphing tools
+
 # Getting Started
 ## Prerequisites
 1.  Installed and configured Beckhoff XAE
@@ -18,6 +26,7 @@ to load the file, and [matplotlib](https://matplotlib.org) or [plotly](https://p
 3.	Link the encoder counter to `MAIN.enc_raw`
 
 ## For iPython
+1.  Install [Jupyter notebook](http://jupyter.readthedocs.io/en/latest/) (e.g. using Anaconda)
 1.  Install [pyads](http://pyads.readthedocs.io/en/latest/), [matplotlib](https://matplotlib.org) and [plotly](https://plot.ly/python/getting-started/)
 2.  Configure `BinaryPlotter.ipynbn` with your PLC's name and ADS address
 
