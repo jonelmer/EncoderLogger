@@ -35,5 +35,4 @@ The file is then unpacked using the `struct` module. This takes a format string 
 
 ![matplotlib](.\matplotlib.png)
 
-
-![plotly](.\plotly.png)
+[![Plotly graph](./plotly.png)](https://plot.ly/~jelmerstfc/14)
