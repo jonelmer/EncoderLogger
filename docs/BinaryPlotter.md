@@ -25,8 +25,6 @@ if filename:
 ```
 
     Copied 2018-06-18 09-48-37.bin from the PLC
-    
-
 
 ```python
 import struct
