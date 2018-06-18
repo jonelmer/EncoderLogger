@@ -9,7 +9,7 @@ The encoder data is stored in `enc_raw` by the PLC, which reflects the internal 
 
 Timestamping is achieved by reading the [EtherCAT distributed clock](https://infosys.beckhoff.com/english.php?content=../content/1033/ethercatsystem/2469118347.html&id=) at the start of the PLC scan, to `tDC`.
 
-The encoder value `enc_raw` and timestamp `tDC` are stored in a `DCTIME64_UINT` [structure]($/EncoderRead/EncoderLogger/DUTs/DCTIME64_UINT.TcDUT) which allows the time + data pairs to be manipulated simultaneous. 
+The encoder value `enc_raw` and timestamp `tDC` are stored in a `DCTIME64_UINT` [structure](_git/Encoder Logger#path=$/EncoderRead/EncoderLogger/DUTs/DCTIME64_UINT.TcDUT) which allows the time + data pairs to be manipulated simultaneous. 
 
 ### Buffering data
 Each write takes approximately 1ms to complete; depending on the PLC scan rate, this limits the rate that data can be written to file.
