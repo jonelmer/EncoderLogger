@@ -176,4 +176,5 @@ py.iplot(fig, filename="encoder_data")
 
 ![View graph](https://plot.ly/~jelmerstfc/6.jpg)
 
+[Interactive](https://plot.ly/~jelmerstfc/6)
 
