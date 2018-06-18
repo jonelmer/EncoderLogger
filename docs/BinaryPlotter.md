@@ -175,5 +175,5 @@ py.iplot(fig, filename="encoder_data")
 
 
 [View the graph here  
-![Plotly graph](https://plot.ly/~jelmerstfc/6.jpg)](https://plot.ly/~jelmerstfc/6)
+![Plotly graph](https://plot.ly/~jelmerstfc/14.jpg)](https://plot.ly/~jelmerstfc/14)
 
