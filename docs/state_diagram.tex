@@ -6,6 +6,7 @@
 
 \usepackage{pgf}
 \usepackage{tikz}
+\usepackage{xcolor}
 \usetikzlibrary{arrows,automata}
 \usepackage[latin1]{inputenc}
 
@@ -16,31 +17,45 @@
                     semithick]
 \tikzstyle{every state}=[fill=lightgray,draw=black,text=black]
 
-\node[initial,state] 	(0) 	{0};
+\node[initial,state] 	(0) 					{0};
 \node[state]		(10) 	[right of=0]			{10};
 \node[state]		(20) 	[right of=10]			{20};
-\node[state]		(30) 	[below left of=20]			{30};
+\node[state]		(30) 	[below left of=20]		{30};
 \node[state]		(40) 	[right of=30]			{40};
-\node[state]		(100) 	[right of=40]		{100};
-\node[state]		(210) 	[below of=0]	{210};
+\node[state]		(100) 	[right of=40]			{100};
+\node[state]		(210) 	[below of=0]			{210};
 \node[state]		(200) 	[below right of=210]	{200};
 
 
-\path 	(0)	edge	[loop above]	node	{NOT bRecordData}	(0)
-	(0)	edge			node	{}	(10)
-	(10)	edge			node	{}	(20)
-	(20)	edge	[loop above]	node	{fbFileOpen.bBusy}	(20)
+\path 	(0)	edge	[loop above]	node	{NOT bRecordData}				(0)
+	(0)	edge			node	{}							(10)
+	(10)	edge			node	{}							(20)
+	(20)	edge	[loop above]	node	{fbFileOpen.bBusy}					(20)
 	(20)	edge			node	[above, sloped]{NOT fbFileOpen.bBusy}	(30)
-	(30)	edge	[bend left]	node	{}	(40)
-	(40)	edge	[loop above]	node	{fbFileWriter.bBusy}	(40)
-	(40)	edge	[bend left]	node	[below]{NOT fbFileWriter.bError}	(30)
-	(30)	edge			node 	[above, sloped]{NOT bRecordData}	(200)
-	(200)	edge			node 	{}	(210)
+	(30)	edge	[bend left]	node	{}							(40)
+	(40)	edge	[loop above]	node	{fbFileWriter.bBusy}				(40)
+	(40)	edge	[bend left]	node	[below]{NOT fbFileWriter.bError}		(30)
+	(30)	edge			node 	[above, sloped]{NOT bRecordData}		(200)
+	(200)	edge	[bend left]	node 	{}							(210)
 	(210)	edge			node 	[above, sloped]{NOT fbFileClose.bBusy}	(0)
-	(210)	edge	[loop right]	node	{fbFileClose.bBusy}	(210)
-	(20)	edge	[bend left]	node 	[above, sloped]{fbFileOpen.Error}	(100)
-	(40)	edge			node 	{fbFileWriter.bError}	(100)
-	(100)	edge	[bend left]	node	{}	(200);
+	(210)	edge	[loop right]	node	{fbFileClose.bBusy}					(210)
+	(20)	edge	[bend left]	node 	[above, sloped]{fbFileOpen.Error}		(100)
+	(40)	edge			node 	{fbFileWriter.bError}				(100)
+	(100)	edge	[bend left]	node	{}							(200);
+
+\fontfamily{\sfdefault}\selectfont
+\small
+\itshape
+\color{blue}
+
+\draw	(0)	node	[below right=0.25cm]{Wait to start}
+	(10)	node	[above right=0.25cm]{Open the file}
+	(20)	node	[above right=0.25cm]{Wait for opening to finish}
+	(30)	node	[left=0.5cm]{If still recording, write the file}
+	(40)	node	[below right=0.25cm]{Wait for writing to finish}
+	(100)	node	[below right=0.25cm]{Error}
+	(200)	node	[below right=0.25cm]{Close the file}
+	(210)	node	[below right=0.25cm]{Wait for closing to finish};
 
 
 \end{tikzpicture}
