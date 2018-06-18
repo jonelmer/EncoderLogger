@@ -1,4 +1,4 @@
-# Encoder logger by Jon Elmer
+# Encoder logger
 This project demonstrates reading an incremental encoder and logging to file using Beckhoff TwinCAT. An iPython notebook is provided for plotting the data.
 
 ## PLC Code
@@ -40,3 +40,5 @@ The process is implemented in a state machine:
 
 ![state diagram](./state_diagram.png)
 
+## iPython Notebook
+The [notebook](./BinaryPlotter.md)
