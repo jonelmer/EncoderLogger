@@ -17,7 +17,7 @@ An array of `DCTIME64_UINT` [structures]($/EncoderRead/EncoderLogger/DUTs/DCTIME
 On each PLC cycle, the next element in the array is written with the current timestamp + data pair. 
 An integer count of the number of values currently in `stBuffer` is stored in `iEndOfBuffer`, to facilitate writing to the end of the buffer.
 
-When the file writer is ready to process the next bathc of data, the buffer is copied and cleared, resetting `iEndOfBuffer` to zero.
+When the file writer is ready to process the next bathc of data, the buffer is copied to `stBufferToWrite` and cleared, resetting `iEndOfBuffer` to zero.
 
 ## Writing data
 Writing data from the PLC roughly follows the [Beckhoff example code](https://infosys.beckhoff.com/english.php?content=../content/1033/tcplclib_tc2_system/18014398540571275.html&id=1203834407911917924).
