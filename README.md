@@ -1,21 +1,20 @@
 # Introduction
-This project uses Beckhoff hardware to log an encoder position at 100µs intervals (or whatever speed the PLC is set to scan).
-
-The position is timestamped using the EtherCAT distributed clock, and saved in a binary file format.
+This project uses Beckhoff hardware to log an encoder position at 100µs intervals.
+The encoder position is timestamped using the EtherCAT distributed clock, and saved in a binary file format.
 
 A iPython notebook is provided, using [pyads](http://pyads.readthedocs.io/en/latest/), 
 [shutil](https://docs.python.org/3.6/library/shutil.html) and [struct](https://docs.python.org/3.6/library/struct.html) 
 to load the file, and [matplotlib](https://matplotlib.org) or [plotly](https://plot.ly) to visualise the data.
 
-![Graph](./docs/plotly.png)
-
-# Features
+## Features
 The project demonstrates the following features:
 - Timestamping of data using EtherCAT distributed clocks
 - Writing files from the PLC
 - Reading PLC variables over the network using ADS
 - Converting data from the PLC into a Pythonic format
 - Plotting data using common Python graphing tools
+
+![Graph](./docs/plotly.png)
 
 # Getting Started
 ## Prerequisites
