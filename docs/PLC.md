@@ -21,15 +21,13 @@ When the file writer is ready to process the next bathc of data, the buffer is c
 
 ## Writing data
 Writing data from the PLC roughly follows the [Beckhoff example code](https://infosys.beckhoff.com/english.php?content=../content/1033/tcplclib_tc2_system/18014398540571275.html&id=1203834407911917924).
-The general process is as follows:
 
+The general process is as follows:
  -  Open the file with `FB_FileOpen`
  -  Wait for the file to be opened successfully
- 
  -  Write some data to the file with `FB_FileWrite`
  -  Wait for writing to finish
  -  Write some more, as above
- 
  -  Close the file with `FB_FileClose`
  -  Wait for the file to close successfully
 
