@@ -2,14 +2,14 @@
 This project demonstrates reading an incremental encoder and logging to file using Beckhoff TwinCAT. An iPython notebook is provided for plotting the data.
 
 ## PLC Code
-The [main PLC code](https://jestfc.visualstudio.com/_git/Encoder Logger?path=/EncoderRead/EncoderLogger/POUs/MAIN.TcPOU) fulfills three roles; reading the encoder data and timestamp, buffering of the data, and writing the buffer to file.
+The [main PLC code](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=%2FEncoderRead%2FEncoderLogger%2FPOUs%2FMAIN.TcPOU&version=GBmaster) fulfills three roles; reading the encoder data and timestamp, buffering of the data, and writing the buffer to file.
 
 ### Reading data
 The encoder data is stored in `enc_raw` by the PLC, which reflects the internal counter on the EL5101. The encoder angle is calculated from this and stored in `enc_angle`.
 
 Timestamping is achieved by reading the [EtherCAT distributed clock](https://infosys.beckhoff.com/english.php?content=../content/1033/ethercatsystem/2469118347.html&id=) at the start of the PLC scan, to `tDC`.
 
-The encoder value `enc_raw` and timestamp `tDC` are stored in a `DCTIME64_UINT` [structure](https://jestfc.visualstudio.com/_git/Encoder Logger?path=/EncoderRead/EncoderLogger/DUTs/DCTIME64_UINT.TcDUT) which allows the time + data pairs to be manipulated simultaneous. 
+The encoder value `enc_raw` and timestamp `tDC` are stored in a `DCTIME64_UINT` [structure](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=/EncoderRead/EncoderLogger/DUTs/DCTIME64_UINT.TcDUT) which allows the time + data pairs to be manipulated simultaneous. 
 
 ### Buffering data
 Each write takes approximately 1ms to complete; depending on the PLC scan rate, this limits the rate that data can be written to file.
