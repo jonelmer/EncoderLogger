@@ -92,15 +92,15 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">520</v>
+                      <v n="Value">623</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">165</v>
+                      <v n="Value">146</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">150</v>
+                      <v n="Value">240</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -124,11 +124,11 @@
                     </o>
                     <o>
                       <v n="Id">550940142L</v>
-                      <v n="Value">595</v>
+                      <v n="Value">743</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">180</v>
+                      <v n="Value">161</v>
                     </o>
                     <o>
                       <v n="Id">2678395525L</v>
@@ -162,7 +162,7 @@
                 <v n="VisualElementIdentifier">"GenElemInst_2"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
-                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                   <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
@@ -800,10 +800,10 @@
                                 <v>TL_ElementProperties.Points</v>
                                 <v>DescriptionUseFromParent</v>
                                 <v></v>
-                                <v>DefaultArraySize</v>
-                                <v>500</v>
                                 <v>''NORMAL__COMMENT</v>
                                 <v> There is no more information than the parent provides</v>
+                                <v>DefaultArraySize</v>
+                                <v>500</v>
                               </d>
                               <v n="ConvDone">true</v>
                             </o>
@@ -856,8 +856,6 @@
                         <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
                           <v n="AttrFlags">81920UL</v>
                           <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
-                            <v>PolygonPoints</v>
-                            <v></v>
                             <v>DescriptionTextId</v>
                             <v>TL_ElementProperties.Desc_StaticLinePos</v>
                             <v>DisplayTextId</v>
@@ -872,6 +870,8 @@
                             <v>visu_elemdev</v>
                             <v>Storable</v>
                             <v>True</v>
+                            <v>PolygonPoints</v>
+                            <v></v>
                           </d>
                           <v n="ConvDone">true</v>
                         </o>
@@ -1021,15 +1021,15 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">516</v>
+                      <v n="Value">363</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">240</v>
+                      <v n="Value">226</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">150</v>
+                      <v n="Value">250</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -1057,7 +1057,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">""</v>
+                      <v n="Value">"Buffer size"</v>
                     </o>
                     <o>
                       <v n="Id">571893170L</v>
@@ -1074,6 +1074,10 @@
                     <o>
                       <v n="Id">2597686782L</v>
                       <v n="Value">false</v>
+                    </o>
+                    <o>
+                      <v n="Id">823443203L</v>
+                      <v n="Value">"45"</v>
                     </o>
                   </l>
                 </o>
@@ -1175,15 +1179,15 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">678</v>
+                      <v n="Value">623</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">240</v>
+                      <v n="Value">226</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">35</v>
+                      <v n="Value">90</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -1207,11 +1211,11 @@
                     </o>
                     <o>
                       <v n="Id">550940142L</v>
-                      <v n="Value">695</v>
+                      <v n="Value">668</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">255</v>
+                      <v n="Value">241</v>
                     </o>
                     <o>
                       <v n="Id">2678395525L</v>
@@ -1358,15 +1362,15 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">538</v>
+                      <v n="Value">723</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">359</v>
+                      <v n="Value">226</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">129</v>
+                      <v n="Value">140</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -1390,11 +1394,11 @@
                     </o>
                     <o>
                       <v n="Id">550940142L</v>
-                      <v n="Value">602</v>
+                      <v n="Value">793</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">374</v>
+                      <v n="Value">241</v>
                     </o>
                     <o>
                       <v n="Id">2678395525L</v>
@@ -1541,15 +1545,15 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">507</v>
+                      <v n="Value">363</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">99</v>
+                      <v n="Value">146</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">248</v>
+                      <v n="Value">250</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -1573,11 +1577,11 @@
                     </o>
                     <o>
                       <v n="Id">550940142L</v>
-                      <v n="Value">631</v>
+                      <v n="Value">488</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">114</v>
+                      <v n="Value">161</v>
                     </o>
                     <o>
                       <v n="Id">2678395525L</v>
@@ -1724,15 +1728,15 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">405</v>
+                      <v n="Value">363</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">202</v>
+                      <v n="Value">186</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">504</v>
+                      <v n="Value">500</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -1756,11 +1760,11 @@
                     </o>
                     <o>
                       <v n="Id">550940142L</v>
-                      <v n="Value">657</v>
+                      <v n="Value">613</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">217</v>
+                      <v n="Value">201</v>
                     </o>
                     <o>
                       <v n="Id">2678395525L</v>
@@ -1923,10 +1927,10 @@
               <d n="FbMethods" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>FB_Init</v>
                 <v>e00cd426-2a31-4728-a598-2e1e4fe67d6f</v>
-                <v>FB_Exit</v>
-                <v>bd1950a6-138d-4eaf-9bd3-8b418a61bb2c</v>
                 <v>FB_Reinit</v>
                 <v>bc3885e6-5069-4cf0-8b08-e902c6744daa</v>
+                <v>FB_Exit</v>
+                <v>bd1950a6-138d-4eaf-9bd3-8b418a61bb2c</v>
               </d>
               <v n="FbName">"NotImportant"</v>
               <v n="FbGuid">{4c8663e4-2fce-4f0e-b342-abf5294ee2c6}</v>
@@ -2020,7 +2024,6 @@
         <Type n="Guid">System.Guid</Type>
         <Type n="Hashtable">System.Collections.Hashtable</Type>
         <Type n="HotkeyConfiguration">{6b108d46-58af-4e41-a3f4-174d8f160cc4}</Type>
-        <Type n="IInputAction[]">_3S.CoDeSys.VisualElem.IInputAction[], VisualElem, Version=3.5.10.0, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="Int16">System.Int16</Type>
         <Type n="Int32">System.Int32</Type>
         <Type n="Int64">System.Int64</Type>
@@ -2029,6 +2032,7 @@
         <Type n="String">System.String</Type>
         <Type n="StructuredTypeNode">{503c5b2e-e80e-4ee7-ae00-c5b93a62b1aa}</Type>
         <Type n="STSnippetInputAction">{6302d3fe-6ea5-4c42-819a-a9734a133b3d}</Type>
+        <Type n="STSnippetInputAction[]">_3S.CoDeSys.VisualElem.STSnippetInputAction[], VisualElem.plugin, Version=3.5.10.31, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="TextDocument">{f3878285-8e4f-490b-bb1b-9acbb7eb04db}</Type>
         <Type n="TextLine">{a5de0b0b-1cb5-4913-ac21-9d70293ec00d}</Type>
         <Type n="TypeClass">{16f7aa24-038f-444e-9d81-b001bc091d35}</Type>

@@ -34,3 +34,8 @@ The general process is as follows:
 The process is implemented in a state machine:
 
 ![state diagram](./state_diagram.png)
+
+## Visualisation
+The visualisation provides live display of encoder value, and a means to start and stop the recording of data.
+
+![state diagram](./visu.gif)
