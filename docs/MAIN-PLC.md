@@ -1,4 +1,4 @@
-[Code in repository](../POUs/MAIN.TcPOU)
+[Code in repository](../EncoderRead/EncoderLogger/POUs/MAIN.TcPOU)
 
 ```pascal
 PROGRAM MAIN
