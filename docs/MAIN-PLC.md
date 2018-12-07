@@ -1,4 +1,4 @@
-[Code in repository](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=%2FEncoderRead%2FEncoderLogger%2FPOUs%2FMAIN.TcPOU&version=GBmaster)
+[Code in repository](../POUs/MAIN.TcPOU)
 
 ```pascal
 PROGRAM MAIN
