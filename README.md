@@ -33,10 +33,7 @@ The project demonstrates the following features:
 # Documentation
 For further documentation, see the [docs](/docs)
 
-[PLC](docs/PLC.md)
-
-[MAIN](docs/MAIN%20PLC.md)
-
-[Notebook](docs/Notebook.md)
-
-[Binary Plotter](docs/BinaryPlotter.md)
+- [PLC](docs/PLC.md)
+- [MAIN](docs/MAIN-PLC.md)
+- [Notebook](docs/Notebook.md)
+- [Binary Plotter](docs/BinaryPlotter.md)
