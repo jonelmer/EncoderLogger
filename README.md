@@ -31,4 +31,4 @@ The project demonstrates the following features:
 2.  Configure `BinaryPlotter.ipynbn` with your PLC's name and ADS address
 
 # Documentation
-For further documentation, see the [docs](/.docs)
+For further documentation, see the [docs](/docs)
