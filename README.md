@@ -32,3 +32,8 @@ The project demonstrates the following features:
 
 # Documentation
 For further documentation, see the [docs](/docs)
+
+[PLC](docs/PLC.md)
+[MAIN](docs/MAIN PLC.md)
+[Notebook](docs/Notebook.md)
+[Binary Plotter](BinaryPlotter.md)
