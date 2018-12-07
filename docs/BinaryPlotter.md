@@ -1,4 +1,4 @@
-[Code in repository](https://jestfc.visualstudio.com/_git/Encoder%20Logger?path=%2FPython&version=GBmaster&_a=contents#path=%2FPython%2FBinaryPlotter.ipynb&version=GBmaster)
+[Code in repository](../Python/BinaryPlotter.ipynb)
 
 ```python
 # Get the latest fie from the PLC
