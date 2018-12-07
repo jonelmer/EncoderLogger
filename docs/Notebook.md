@@ -33,6 +33,6 @@ The file is then unpacked using the `struct` module. This takes a format string 
 > Plotly doesn't like large datasets (500k points), which this code easily beats. 
 > If plotting is too slow, try uncommenting `plotter = go.Scattergl`.
 
-![matplotlib](.\matplotlib.png)
+![matplotlib](./matplotlib.png)
 
 [![Plotly graph](./plotly.png)](https://plot.ly/~jelmerstfc/14)
